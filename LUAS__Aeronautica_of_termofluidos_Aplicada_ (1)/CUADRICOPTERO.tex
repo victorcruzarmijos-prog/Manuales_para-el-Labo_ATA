@@ -3,7 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[spanish,es-tabla]{babel}
-\usepackage{graphicx} % Listo para compilar con tus imágenes
+\usepackage{graphicx} % Sin [demo] para que cargue tu diagrama real
 \usepackage{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
@@ -240,12 +240,12 @@ Para evitar la latencia e interferencias del protocolo analógico PPM y omitir l
 \end{enumerate}
 
 \subsection{Conexiones Centrales del Controlador Cube}
-El bloque central de conexiones maneja la distribución de energía y las señales PWM hacia los variadores de velocidad.
+El bloque central de conexiones maneja la distribución de energía y las señales PWM hacia los variadores de velocidad. El diagrama general de la arquitectura del hardware se detalla a continuación:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.65\textwidth]{CUBE_RECEPTOR.jpeg}
-    \caption{Integración del controlador Cube y el receptor Flysky FS-iA10B. Se observa la conexión digital i-BUS en el puerto \texttt{SERVO} del receptor (LED encendido), la alimentación principal ingresando por \texttt{POWER 1} y las conexiones de control de los ESC en el riel \texttt{MAIN OUT}.}
+    \includegraphics[width=0.95\textwidth]{Diagrama_dron.jpeg}
+    \caption{Diagrama general de conexiones del controlador Cube, ilustrando la integración del sistema de telemetría, zumbador (buzzer), receptor RC, módulo GPS y la distribución de potencia hacia los ESC.}
 \end{figure}
 
 \section{Configuración del Protocolo en la Emisora}
@@ -369,7 +369,7 @@ ArduPilot utiliza el estándar aeroespacial NED (North, East, Down). Esto signif
     \item Reiniciar el controlador de vuelo (\textit{Reboot}).
 \end{enumerate}
 
-\section[Prevención de Interferencias Electromagnéticas (EMI)]{Prevención de Interferencias \\ Electromagnéticas (EMI)}
+\section{Prevención de Interferencias Electromagnéticas (EMI)}
 
 \subsection{Fuentes Generadoras de Campos Magnéticos (Alejar)}
 \begin{itemize}[leftmargin=*]
@@ -377,12 +377,6 @@ ArduPilot utiliza el estándar aeroespacial NED (North, East, Down). Esto signif
     \item \textbf{Variadores (ESC):} Deben montarse en los brazos del dron, por las altas corrientes que conmutan.
     \item \textbf{Motores Brushless:} Sus bobinas generan campos magnéticos perjudiciales para los sensores de navegación.
 \end{itemize}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{motor_air2213.jpeg}
-    \caption{Motor Brushless equivalente a 1000KV. Las corrientes en sus bobinas de cobre lo convierten en un fuerte generador de interferencia.}
-\end{figure}
 
 \subsection{Mejores Prácticas de Ensamblaje Estructural}
 \begin{enumerate}[leftmargin=*]
