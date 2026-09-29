@@ -1,84 +1,68 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-nodecimaldot]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{geometry}
-\usepackage{graphicx}
+\usepackage{graphicx} % Listo para tus imágenes reales
 \usepackage{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{tcolorbox}
 \usepackage{tabularx}
+\usepackage{array} 
+\usepackage{colortbl}
 \usepackage{enumitem}
 \usepackage{parskip}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{microtype} 
 \usepackage{hyperref}
+\usepackage{amssymb}
 
 % Configuración de márgenes
-\geometry{
-    top=3cm,
-    bottom=3cm,
-    left=3cm,
-    right=3cm
-}
+\geometry{top=3cm, bottom=3cm, left=3cm, right=3cm}
 
-% Definición de colores basados en las imágenes
-\definecolor{epnblue}{RGB}{28, 53, 94} 
-\definecolor{epngold}{RGB}{218, 165, 32}
-\definecolor{warnred}{RGB}{192, 0, 0}
-\definecolor{lightgray}{RGB}{245, 245, 245}
+% Alineación vertical centrada para TODAS las tablas tabularx
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+
+% Definición de colores principales
+\definecolor{epnblue}{RGB}{20, 45, 85} 
+\definecolor{epngold}{RGB}{180, 130, 20}
+\definecolor{warnred}{RGB}{180, 0, 0}
+\definecolor{djigray}{RGB}{240, 240, 240}
+\definecolor{tablehead}{RGB}{220, 225, 230}
+
+% Colores específicos para la tabla de LEDs
+\definecolor{ledblue}{RGB}{0, 70, 150}
+\definecolor{ledgreen}{RGB}{0, 120, 40}
+\definecolor{ledyellow}{RGB}{180, 110, 0}
+\definecolor{ledred}{RGB}{190, 0, 0}
 
 % Configuración de cabeceras y pies de página
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{\textcolor{epnblue}{\small Plataforma Ala Fija - Cube Orange}}
-\fancyhead[R]{\textcolor{epnblue}{\small Manual operativo}}
+\fancyhead[R]{\textcolor{epnblue}{\small Manual Operativo}}
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{epnblue}\leaders\hrule height \headrulewidth\hfill}}
 \fancyfoot[C]{\thepage}
 
-% Formato de títulos de sección (titlesec)
-\titleformat{\section}
-  {\color{epnblue}\Large\bfseries}
-  {\thesection.}
-  {0.5em}
-  {}
-  [{\color{epnblue}\titlerule}]
-  
-\titleformat{name=\section,numberless}
-  {\color{epnblue}\Large\bfseries}
-  {}
-  {0em}
-  {}
-  [{\color{epnblue}\titlerule}]
+% Formato de títulos de sección
+\titleformat{\section}{\color{epnblue}\Large\bfseries}{\thesection.}{0.5em}{}[\color{epnblue}\titlerule]
+\titleformat{name=\section,numberless}{\color{epnblue}\Large\bfseries}{}{0em}{}[\color{epnblue}\titlerule]
+\titleformat{\subsection}{\color{epnblue}\large\bfseries}{\thesubsection}{0.5em}{}
 
-\titleformat{\subsection}
-  {\color{epnblue}\large\bfseries}
-  {\thesubsection}
-  {0.5em}
-  {}
+% Cajas de información
+\newtcolorbox{warningbox}{sharp corners, colback=djigray, colframe=warnred, boxrule=0pt, leftrule=4pt, top=8pt, bottom=8pt, left=10pt}
+\newtcolorbox{notebox}{sharp corners, colback=epnblue!5, colframe=epnblue, boxrule=0pt, leftrule=4pt, top=8pt, bottom=8pt, left=10pt}
 
-\titleformat{\subsubsection}
-  {\color{epnblue}\normalsize\bfseries}
-  {\thesubsubsection}
-  {0.5em}
-  {}
-
-% Caja de advertencia (tcolorbox)
-\newtcolorbox{warningbox}{
-    sharp corners,
-    colback=lightgray,
-    colframe=warnred,
-    boxrule=0pt,
-    leftrule=3pt,
-    top=8pt,
-    bottom=8pt,
-    left=10pt
-}
-
-% Enlaces sin bordes de colores
 \hypersetup{
-    hidelinks
+    colorlinks=true,
+    linkcolor=epnblue,
+    urlcolor=epnblue,
+    citecolor=epnblue
 }
 
 \begin{document}
@@ -87,128 +71,384 @@
 % PORTADA
 % ----------------------------------------------------
 \begin{titlepage}
-    \centering
-    \vspace*{0.5cm}
-    
+    \centering\vspace*{0.5cm}
     \textcolor{epnblue}{\rule{\textwidth}{1pt}}\\[0.6cm]
     {\Large \textcolor{epnblue}{\textsc{Escuela Politécnica Nacional}}}\\[0.2cm]
     {\normalsize \textcolor{epnblue}{Facultad de Ingeniería Mecánica}}\\[0.1cm]
     {\normalsize \textcolor{epnblue}{Grupo de Investigación en Aeronáutica y Termofluidos Aplicados}}\\[0.5cm]
-    \textcolor{epnblue}{\rule{\textwidth}{1pt}}
+    \textcolor{epnblue}{\rule{\textwidth}{1pt}}\vspace{3.5cm}
     
-    \vspace{3.5cm}
-    
-    {\Large \bfseries \textcolor{epnblue}{Manual de configuración y operación}}\\[0.3cm]
+    {\Large \bfseries \textcolor{epnblue}{Manual de Configuración y Operación}}\\[0.3cm]
     {\Large \bfseries \textcolor{epnblue}{Plataforma Ala Fija de Entrenamiento}}\\[0.3cm]
     {\Large \bfseries \textcolor{epnblue}{Controlador Cube Orange}}\\[1.5cm]
-    
     \textcolor{epngold}{\rule{4cm}{1pt}}\\[1.5cm]
-    
     \colorbox{epnblue}{\makebox[6cm][c]{\textcolor{white}{\rule{0pt}{15pt}\bfseries MANUAL OPERATIVO\rule[-5pt]{0pt}{5pt}}}}\\[2.5cm]
     
-    \begin{table}[h]
-        \centering
-        \renewcommand{\arraystretch}{1.3}
+    \begin{table}[h]\centering\renewcommand{\arraystretch}{1.3}
         \begin{tabular}{rl}
             \textbf{Autores:} & Victor Humberto Cruz Armijos \\
             \textbf{Institución:} & Escuela Politécnica Nacional (EPN) \\
-            \textbf{Departamento:} & Facultad de Ingeniería Mecánica \\
             \textbf{Área de investigación:} & Monitoreo de ecosistemas altoandinos \\
-            \textbf{Fecha:} & Septiembre de 2026 \\
-            \textbf{Clasificación:} & Manual técnico interno \\
-            \textbf{Versión:} & 1.0 \\
+            \textbf{Clasificación:} & Manual técnico y de manufactura \\
+            \textbf{Versión:} & 14.0 (Edición Integral Definitiva) \\
         \end{tabular}
-    \end{table}
-    
-    \vfill
-    
+    \end{table}\vfill
     \textcolor{epnblue}{\rule{\textwidth}{1pt}}\\[0.2cm]
     {\scriptsize Quito, Ecuador - Ladrón de Guevara E11-253 - www.epn.edu.ec}
 \end{titlepage}
 
 \newpage
-
-% ----------------------------------------------------
-% ÍNDICE Y ADVERTENCIAS
-% ----------------------------------------------------
 \tableofcontents
 \newpage
 
-\section*{Advertencias de Seguridad y Disclaimer}
-\addcontentsline{toc}{section}{Advertencias de Seguridad y Disclaimer}
-
+% ----------------------------------------------------
+% ADVERTENCIAS Y ESPECIFICACIONES
+% ----------------------------------------------------
+\section*{Advertencias de Seguridad}
+\addcontentsline{toc}{section}{Advertencias de Seguridad}
 \begin{warningbox}
 \textbf{\textcolor{warnred}{Precauciones Críticas de Seguridad Operativa:}} La operación de Vehículos Aéreos No Tripulados (VANT) conlleva riesgos inherentes de carácter material y físico que el operador debe mitigar preventivamente.
 
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Riesgo Eléctrico e Ignición:} Las baterías de Polímero de Litio (LiPo) son altamente volátiles si se perforan, cortocircuitan o sobrecargan. Se debe utilizar siempre bolsas ignífugas (\textit{LiPo Safe Bags}) para su transporte y proceso de carga.
-    \item \textbf{Riesgo Mecánico (Hélices):} La hélice rígida impulsada por el motor brushless en el ala fija gira a altas revoluciones y puede causar laceraciones graves. Nunca se debe armar el equipo ni conectar la batería principal en espacios cerrados sin asegurar o retirar previamente la hélice.
-    \item \textbf{Responsabilidad del Operador:} El ensamblador y piloto asumen total responsabilidad por daños a terceros. El presente manual es una guía técnica y no exime al operador de cumplir con la normativa de la Dirección General de Aviación Civil (DGAC).
+\begin{itemize}[leftmargin=*, itemsep=1ex]
+    \item \textbf{Riesgo Eléctrico e Ignición:} Las baterías de Polímero de Litio (LiPo) son altamente volátiles si se perforan, cortocircuitan o sobrecargan. Utilizar siempre bolsas ignífugas (\textit{LiPo Safe Bags}) para su transporte y proceso de carga.
+    \item \textbf{Riesgo Mecánico (Hélices):} La hélice rígida impulsada por el motor \textit{brushless} gira a altas revoluciones y puede causar laceraciones graves. Nunca armar el equipo ni conectar la batería en espacios cerrados sin asegurar o retirar previamente la hélice.
+    \item \textbf{Responsabilidad del Operador:} El ensamblador y piloto asumen total responsabilidad por daños a terceros. Este manual es una guía técnica y no exime de cumplir con la normativa de la Dirección General de Aviación Civil (DGAC).
 \end{itemize}
 \end{warningbox}
 
-\vspace{1cm}
+\section{Especificaciones Técnicas}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|>{\columncolor{epnblue!10}\bfseries}l|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Plataforma Aeronáutica} & Ala fija monomotor (Configuración \textit{Pusher}) \\ \hline
+\textbf{Estructura} & Fuselaje monocasco de fibra de carbono. Alas con núcleo de \textit{foam}. \\ \hline
+\textbf{Controlador de Vuelo} & Cube Orange (Sistema de IMUs redundantes) \\ \hline
+\textbf{Firmware} & ArduPlane (Ecosistema ArduPilot) \\ \hline
+\textbf{Gestión de Potencia} & Mauch PL-Sensor + BEC (5.3V) \\ \hline
+\textbf{Enlace de Control} & 2.4 GHz (Receptor FrSky X8R vía protocolo SBUS) \\ \hline
+\textbf{Enlace de Telemetría} & 915 MHz (Módulos RFD900 / SiK Radios) \\ \hline
+\textbf{Sensores Auxiliares} & Tubo de Pitot digital (I2C) y GNSS (Here2). \\ \hline
+\textbf{Despegue} & Lanzamiento manual (\textit{Hand-launch}) \\ \hline
+\textbf{Comportamiento Failsafe} & Ascenso a altitud segura y órbita (Loiter / RTL) \\ \hline
+\end{tabularx}\vspace{0.5cm}
 
 % ----------------------------------------------------
-% CONTENIDO PRINCIPAL
+% INTRODUCCIÓN Y AERODINÁMICA
 % ----------------------------------------------------
 \section{Introducción y Conceptos Básicos}
-
 \subsection{Propósito del Manual}
-El presente documento ha sido elaborado bajo los estándares del Grupo de Investigación en Aeronáutica y Termofluidos Aplicados (ATA), con el objetivo de servir como guía integral para los nuevos investigadores y operadores. Establece los procedimientos estandarizados para el ensamblaje, configuración en la estación terrena y vuelo seguro de la plataforma de ala fija impulsada por el controlador \textbf{Cube Orange}.
+El presente documento ha sido elaborado bajo los estándares del Grupo de Investigación en Aeronáutica y Termofluidos Aplicados (ATA), con el objetivo de servir como guía integral para los nuevos investigadores y operadores. Establece los procedimientos estandarizados para la manufactura, configuración en la estación terrena y vuelo seguro de la plataforma de ala fija. 
 
-\begin{figure}[htbp]
+A diferencia de los cuadricópteros, el ala fija basa su sustentación en la aerodinámica pura generada por el flujo de aire sobre sus perfiles alares. El controlador ejecuta cientos de correcciones por segundo para mantener la estabilidad en los ejes de alabeo (roll), cabeceo (pitch) y guiñada (yaw) utilizando superficies de control móviles.
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{Fix_wing.jpeg}
+    \includegraphics[width=0.85\textwidth]{Fix_wing.jpeg}
     \caption{Vista general de la plataforma de ala fija. Destaca su fuselaje de fibra de carbono, alas rectas, empenaje convencional y configuración de propulsión tipo \textit{pusher} (motor trasero).}
-    \label{fig:plataforma_alafija}
+    \label{fig:plataforma}
 \end{figure}
 
-\subsection{Arquitectura del Sistema de Control}
-A diferencia de los cuadricópteros, el ala fija basa su sustentación en la aerodinámica generada por el flujo de aire sobre sus perfiles alares. El controlador de vuelo ejecuta cientos de correcciones por segundo para mantener la estabilidad en los ejes de alabeo (roll), cabeceo (pitch) y guiñada (yaw) utilizando superficies de control (alerones, elevador, timón).
+\subsection{Geometría del Perfil Alar y Aerodinámica}
+Para comprender la dinámica de vuelo y la configuración precisa del Centro de Gravedad (CG), es indispensable conocer la anatomía aerodinámica del perfil alar (sección transversal del ala).
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Partes_de_ALA.png}
+    \caption{Anatomía de un perfil alar estándar indicando sus parámetros geométricos y aerodinámicos clave. \textit{Fuente de ilustración:} \href{https://www.lavionnaire.fr/EspAlas.php}{L'Avionnaire}.}
+    \label{fig:perfil_alar}
+\end{figure}
+
+Como se observa en el diagrama, las partes principales que rigen la física de vuelo son:
+\begin{itemize}[itemsep=1ex]
+    \item \textbf{Borde de ataque y Borde de salida:} El borde de ataque es la porción frontal redondeada que corta el viento. El borde de salida es la parte posterior afilada donde convergen nuevamente los flujos de aire superior e inferior.
+    \item \textbf{Extradós e Intradós:} Son, respectivamente, las superficies superior e inferior del ala. La asimetría entre ambas (curvatura) obliga al aire a viajar a diferentes velocidades, generando una diferencia de presión estática que "succiona" el ala hacia arriba (Principio de Bernoulli).
+    \item \textbf{Cuerda:} Es la línea recta imaginaria que conecta directamente el borde de ataque con el de salida. Esta longitud es la referencia métrica absoluta para calcular dónde debe posicionarse el Centro de Gravedad longitudinal del avión.
+    \item \textbf{Ángulo de Ataque ($\alpha$):} Es el ángulo agudo formado entre la línea de la cuerda y la dirección del viento relativo. Si el piloto eleva demasiado la nariz de la aeronave, este ángulo se vuelve crítico, separando el flujo de aire adherido al extradós y provocando de forma abrupta una entrada en pérdida (\textit{stall}).
+\end{itemize}
+
+% ----------------------------------------------------
+% GLOSARIO TÉCNICO
+% ----------------------------------------------------
+\section{Glosario Técnico de Aviónica}
+Para facilitar la lectura a operadores en formación, se definen los siguientes acrónimos operativos:
+\begin{itemize}[itemsep=1ex]
+    \item \textbf{FC (Flight Controller):} Controlador de vuelo o "cerebro" del avión (Cube Orange).
+    \item \textbf{ESC (Electronic Speed Controller):} Variador electrónico. Regula la velocidad y torque del motor.
+    \item \textbf{BEC (Battery Eliminator Circuit):} Regulador de voltaje. Toma la alta tensión de la batería LiPo y la reduce a 5.3V limpios para alimentar la electrónica sensible.
+    \item \textbf{I2C:} Protocolo de comunicación en red utilizado para conectar sensores pasivos simultáneamente (Tubo de Pitot, brújula externa).
+    \item \textbf{PWM (Pulse Width Modulation):} Señal eléctrica que el FC envía a los servos para dictaminar exactamente cuántos grados deben moverse.
+    \item \textbf{CG (Centro de Gravedad):} Punto de equilibrio físico de la aeronave apoyado en la longitud de la Cuerda aerodinámica.
+    \item \textbf{Stall (Pérdida):} Condición aerodinámica peligrosa inducida por un alto ángulo de ataque o baja velocidad de flujo.
+    \item \textbf{Pusher:} Configuración aeronáutica donde el propulsor se ubica en la parte trasera del fuselaje, empujando el avión en lugar de tirar de él.
+\end{itemize}
+
+% ----------------------------------------------------
+% MANUFACTURA ESTRUCTURAL
+% ----------------------------------------------------
+\section{Manufactura Estructural y Materiales Compuestos}
+La resistencia estructural de la aeronave es crítica para soportar las cargas aerodinámicas durante el vuelo autónomo. Este diseño aprovecha las excelentes propiedades mecánicas de los materiales compuestos, así como la precisión del diseño asistido por computadora.
+
+\subsection{Diseño y Corte de Placas MDF}
+El perfilado aerodinámico exacto del núcleo de las alas y la estructura base requieren plantillas guía rígidas. El diseño de estas placas se modela en software CAD para luego ser procesado en programas de control de corte como LightBurn o LaserGRBL. 
+
+Posteriormente, las plantillas y costillas estructurales se cortan en placas de MDF utilizando una cortadora láser Ortur Laser Master 3. Este mecanizado CNC garantiza una precisión milimétrica en el perfil alar antes de proceder con el corte térmico del material base.
+
+\subsection{Fabricación de Superficies Sustentadoras (Alas)}
+Con las plantillas MDF preparadas, las alas parten de un núcleo de espuma térmica (\textit{foam}) que es perfilado para obtener la geometría aerodinámica requerida. Sobre este núcleo, se realiza un laminado superficial empleando tela de fibra de carbono impregnada con resina epoxi. El proceso de preparación de la matriz, que idealmente incluye técnicas de desgasificado al vacío, minimiza las porosidades y asegura una adhesión íntima entre las capas compuestas y el núcleo ligero.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Nucleo_foam.jpeg}
+        \caption{Núcleo de foam del ala, perfilado y listo para el revestimiento estructural.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Ala_laminada.jpeg}
+        \caption{Ala laminada con fibra de carbono y curada.}
+    \end{minipage}
+\end{figure}
+
+\subsection{Moldeo del Fuselaje Monocasco}
+Para el fuselaje central, se utiliza un molde negativo particionado en dos mitades que define el volumen interno y el contorno aerodinámico externo de la aeronave. Tras aplicar las capas de fibra, el molde se cierra mecánicamente para el proceso de consolidación y curado.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Molde_abierto.jpeg}
+        \caption{Molde negativo (abierto) preparado para laminación.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Molde_cerrado.jpeg}
+        \caption{Molde negativo ensamblado (cerrado).}
+    \end{minipage}
+\end{figure}
+
+El desmoldado produce dos valvas simétricas e independientes. Estas se alinean, se ajustan y se unen de manera perimetral. Este procedimiento culmina en la obtención de un fuselaje monocasco hueco sumamente rígido, con el volumen ideal para albergar de forma segura toda la aviónica, la telemetría y el banco de baterías.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Valvas_desmoldadas.jpeg}
+        \caption{Valvas izquierda y derecha del fuselaje recién desmoldadas.}
+    \end{minipage}\hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Fuselaje_monocasco.jpeg}
+        \caption{Fuselaje monocasco de fibra de carbono completamente ensamblado.}
+    \end{minipage}
+\end{figure}
+
+\subsection{Ensamblaje del Empenaje (Cola)}
+\vspace{0.5cm}
+\noindent
+\begin{minipage}[c]{0.55\textwidth}
+El conjunto estabilizador se estructura integrando placas sólidas de fibra de carbono. Las superficies móviles de control (el timón de dirección y el elevador) se articulan mecánicamente a los estabilizadores fijos. Esto garantiza deflexiones suaves y precisas bajo las fuertes cargas de viento inducidas directamente por el propulsor trasero (\textit{pusher}). 
+
+Es fundamental que las bisagras y los herrajes de los servos sean asegurados firmemente (utilizando resina o trabarroscas) para evitar el desprendimiento causado por la vibración armónica del motor principal durante vuelos prolongados.
+\end{minipage}\hfill
+\begin{minipage}[c]{0.40\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{Empenaje_ensamblado.jpeg}
+    \captionof{figure}{Empenaje ensamblado mostrando herrajes de control.}
+\end{minipage}
+\vspace{0.5cm}
+
+% ----------------------------------------------------
+% COMPONENTES, HARDWARE Y ENLACES
+% ----------------------------------------------------
+\newpage 
 \section{Lista de Componentes del Sistema}
-Esta sección detalla los componentes electrónicos instalados en el fuselaje de fibra de carbono:
-\begin{itemize}
-    \item \textbf{Controlador de Vuelo (FC):} \textbf{Cube Orange} con Carrier Board, proporcionando IMUs redundantes y conectividad JST-GH.
-    \item \textbf{Gestión de Potencia:} Sistema \textbf{Mauch} (PL-Sensor y BEC) para medición de grado industrial de corriente/voltaje y alimentación limpia a 5.3V.
-    \item \textbf{Sistema de Propulsión:} \textbf{ESC Hobbywing} expuesto al flujo de aire para refrigeración pasiva, y motor brushless.
-    \item \textbf{Receptor de Radio:} \textbf{FrSky X8R} de 8/16 canales, conectado vía protocolo SBUS y transmitiendo telemetría por \textit{Smart Port}.
-    \item \textbf{Expansión I2C:} \textbf{Hub/Splitter} montado en el chasis para la conexión simultánea de periféricos I2C como el magnetómetro externo y el tubo de Pitot.
-\end{itemize}
+Esta sección detalla los componentes electrónicos instalados en el fuselaje de fibra de carbono. Su correcta identificación es crucial para labores de mantenimiento y solución de problemas en campo.
 
-\section{Configuración del Hardware y Enlaces}
+\vspace{0.5cm}
 
+\renewcommand{\arraystretch}{1.8}
+\begin{tabularx}{\textwidth}{| >{\centering\arraybackslash}m{3.5cm} | >{\raggedright\arraybackslash}X |}
+\hline
+\rowcolor{tablehead} \multicolumn{2}{|c|}{\textbf{Electrónica de Control y Potencia}} \\ \hline
+
+\includegraphics[width=3cm, height=2.5cm, keepaspectratio]{CUBE_ORANGE.jpeg} & 
+\textbf{Controlador de Vuelo (FC): Cube Orange} \newline
+Procesador central montado sobre su Carrier Board. Proporciona IMUs redundantes aisladas de vibración y conectividad estandarizada JST-GH para telemetría, GPS y buses CAN. \\ \hline
+
+\includegraphics[width=3cm, height=2.5cm, keepaspectratio]{MAUCH_PL_SENSOR.jpg} & 
+\textbf{Gestión de Potencia: Sistema Mauch} \newline
+Compuesto por un PL-Sensor (medición de alta precisión de corriente/voltaje) y un regulador BEC que asegura una alimentación constante, limpia y redundante a 5.3V hacia el Cube Orange, evitando caídas de tensión. \\ \hline
+
+\includegraphics[width=3cm, height=2.5cm, keepaspectratio]{ESC.jpg} & 
+\textbf{Sistema de Propulsión: ESC Hobbywing} \newline
+Variador electrónico de velocidad. Su diseño permite el montaje en una abertura del fuselaje, dejando el disipador térmico expuesto al flujo de aire exterior para una eficiente refrigeración pasiva del motor \textit{brushless}. \\ \hline
+
+\rowcolor{tablehead} \multicolumn{2}{|c|}{\textbf{Comunicaciones y Periféricos}} \\ \hline
+
+\includegraphics[width=3cm, height=2.5cm, keepaspectratio]{RECEPTOR.jpg} & 
+\textbf{Receptor de Radio: FrSky X8R} \newline
+Receptor de corto/medio alcance (2.4 GHz) de 8/16 canales. Se conecta al controlador de vuelo mediante un único cable utilizando el protocolo SBUS y transmite datos de estado a la pantalla del piloto mediante \textit{Smart Port}. \\ \hline
+
+\includegraphics[width=3cm, height=2.5cm, keepaspectratio]{Expansion_I2C_Hub_Splitter.jpg} & 
+\textbf{Expansión I2C: Hub/Splitter} \newline
+Placa de distribución pasiva montada directamente en la pared de fibra de carbono. Multiplica un único puerto I2C del controlador para conectar simultáneamente múltiples sensores (ej. tubo de Pitot digital y magnetómetro). \\ \hline
+
+\end{tabularx}
+
+\section{Configuración de Hardware y Mission Planner}
 \subsection{Diferenciación de Enlaces (Telemetría vs. Control)}
-El sistema requiere dos enlaces de comunicación paralelos: el enlace de control directo a 2.4 GHz (Radio FrSky X8R) para baja latencia, y el enlace de telemetría bidireccional (generalmente a 915 MHz con módulos RFD900) conectado al puerto TELEM 1 del Cube Orange para el monitoreo de la misión en Mission Planner.
+El sistema requiere dos enlaces de comunicación paralelos: el enlace de control directo a 2.4 GHz (Radio FrSky X8R) para baja latencia, y el enlace de telemetría bidireccional (generalmente a 915 MHz con módulos RFD900) conectado al puerto TELEM 1 del Cube Orange para el monitoreo de la misión.
 
-\subsection{Conexiones Centrales del Controlador Cube}
-\begin{itemize}
-    \item \textbf{RC IN:} Conectado a la salida SBUS del FrSky X8R.
-    \item \textbf{POWER 1:} Conectado al BEC de la placa Mauch.
-    \item \textbf{MAIN OUT:} Mapeo de las señales PWM hacia los servos (ej. CH1: Alerones, CH2: Elevador, CH3: Acelerador/ESC Hobbywing, CH4: Timón).
+\subsection{Mapeo de Servos en Mission Planner}
+Las superficies de control y el motor deben ser mapeados lógicamente dentro de ArduPlane. La asignación de las salidas físicas (\texttt{MAIN OUT}) del Cube Orange a las funciones aerodinámicas se realiza en la pestaña \textbf{Setup $\rightarrow$ Servo Output}. 
+
+Asegúrese de configurar los parámetros \texttt{SERVOn\_FUNCTION} según la siguiente tabla estandarizada para nuestra plataforma de ala fija:
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[H]
+\begin{tabularx}{\textwidth}{|>{\columncolor{epnblue!10}\bfseries}c|c|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{tablehead} \textbf{Puerto (Main Out)} & \textbf{Valor} & \textbf{Función Asignada} \\ \hline
+SERVO 1 & \textbf{4} & \textbf{Aileron} (Alerones para control de alabeo / Roll) \\ \hline
+SERVO 2 & \textbf{19} & \textbf{Elevator} (Elevador para control de cabeceo / Pitch) \\ \hline
+SERVO 3 & \textbf{70} & \textbf{Throttle} (Acelerador / ESC del motor principal) \\ \hline
+SERVO 4 & \textbf{21} & \textbf{Rudder} (Timón para control de dirección / Yaw) \\ \hline
+\end{tabularx}
+\end{table}
+
+\begin{notebox}
+\textbf{Nota Técnica de Configuración:} Si durante las pruebas de tierra observa que una superficie de control se mueve en la dirección incorrecta (ej. el alerón baja cuando debería subir), debe marcar la casilla \textbf{Reverse} directamente en esta ventana de Mission Planner. \textbf{NO} invierta los canales desde la emisora de radio, ya que esto confundirá al controlador de vuelo durante el modo autónomo.
+\end{notebox}
+
+% ----------------------------------------------------
+% INDICADORES LED
+% ----------------------------------------------------
+\section{Indicadores de Estado LED (Módulo GPS/Cube)}
+El sistema utiliza códigos de colores en el módulo GNSS para informar su estado operativo, un estándar crítico para el diagnóstico rápido en campo:
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{tablehead} \textbf{Color y Patrón} & \textbf{Significado Operativo} \\ \hline
+\textcolor{ledblue}{\textbf{Azul Parpadeante}} & \textbf{Buscando Satélites.} El controlador está encendido, pero no tiene bloqueo GPS seguro (No armar). \\ \hline
+\textcolor{ledgreen}{\textbf{Verde Parpadeante}} & \textbf{GPS 3D Fix adquirido.} Sistema de navegación listo. Permiso para armar en modos asistidos. \\ \hline
+\textcolor{ledgreen}{\textbf{Verde Sólido}} & \textbf{SISTEMA ARMADO.} Los motores responderán a la emisora. \textit{Máxima precaución física.} \\ \hline
+\textcolor{ledyellow}{\textbf{Amarillo Parpadeante}} & \textbf{Fallo de Pre-armado.} Sensores sin calibrar, falta enlace de radio, o error de comprobación. \\ \hline
+\textcolor{ledred}{\textbf{Rojo Parpadeante}} & \textbf{Error Crítico / Failsafe.} Batería muy baja o error de hardware. Aterrizar de inmediato. \\ \hline
+\end{tabularx}
+
+% ----------------------------------------------------
+% BALANCEO Y MECÁNICA DE VUELO
+% ----------------------------------------------------
+\section{Balanceo y Mecánica de Vuelo}
+A diferencia de un dron multirrotor que puede compensar un mal balanceo acelerando asimétricamente sus motores, un ala fija exige un balanceo físico estricto previo al vuelo.
+
+\subsection{Ajuste del Centro de Gravedad (CG)}
+El CG suele ubicarse entre el 25\% y 33\% de la anchura del ala (cuerda aerodinámica media), medido desde el borde frontal (borde de ataque). 
+
+\begin{notebox}
+\textbf{Nota de Mantenimiento:} NUNCA se corrige el balanceo longitudinal mediante \textit{trims} en el software. Si el avión "pesa de cola" (tail-heavy) o "pesa de nariz" (nose-heavy), se debe abrir el compartimento del fuselaje y deslizar físicamente la pesada batería LiPo hacia adelante o hacia atrás hasta que el avión se mantenga perfectamente nivelado al sostenerlo con la yema de los dedos justo en las marcas del CG bajo las alas.
+\end{notebox}
+
+\subsection{Verificación de Superficies de Control}
+Antes de armar el motor, es imperativo mover el stick derecho de la emisora y confirmar el movimiento mecánico de las superficies aerodinámicas:
+\begin{itemize}[itemsep=1ex]
+    \item \textbf{Alabeo (Roll):} Stick a la derecha $\rightarrow$ Alerón derecho \textbf{SUBE}, alerón izquierdo \textbf{BAJA}.
+    \item \textbf{Cabeceo (Pitch):} Stick hacia atrás (tirar hacia ti) $\rightarrow$ Elevador de la cola \textbf{SUBE}. Stick hacia adelante (empujar) $\rightarrow$ Elevador \textbf{BAJA}.
+    \item \textbf{Guiñada (Yaw):} Stick izquierdo a la derecha $\rightarrow$ Timón de la cola gira a la \textbf{DERECHA}.
 \end{itemize}
 
-\section{Sincronización de ESC y Configuración de Arranque}
-Para garantizar que el motor responda correctamente a todo el rango del acelerador:
-\begin{enumerate}
-    \item Retirar la hélice del motor por seguridad.
-    \item Encender la emisora FrSky y subir el acelerador al 100\%.
-    \item Conectar la batería principal al sistema (a través del PL-Sensor de Mauch).
-    \item El ESC \textbf{Hobbywing} emitirá tonos musicales. Inmediatamente, bajar el acelerador al 0\%.
-    \item Esperar el tono de confirmación del ESC, indicando que los límites PWM han sido memorizados.
+% ----------------------------------------------------
+% TELEMETRÍA Y CALIBRACIONES
+% ----------------------------------------------------
+\section{Configuración de Telemetría (RFD900)}
+El enlace de datos a 915 MHz es vital para el monitoreo de la misión. El módulo aire se conecta al puerto \texttt{TELEM 1} del Cube Orange. Asegure las antenas del módulo RFD900 en un ángulo de $90^\circ$ entre sí (polarización cruzada) para evitar zonas de sombra electromagnética durante los giros pronunciados.
+
+\section{Calibraciones y Altitud (ArduPlane)}
+El sensor del Tubo de Pitot (I2C) debe calibrarse en Mission Planner (\textit{Preflight Calibration}) antes de cada vuelo, asegurándose de que la sonda esté tapada para establecer la presión cero estática.
+\newline
+\newline
+Operar en ecosistemas altoandinos (como Quito, $\sim$2800 m.s.n.m.) requiere ajustar meticulosamente los parámetros de velocidad en Mission Planner (\texttt{TRIM\_ARSPD\_CM} y \texttt{ARSPD\_FBW\_MIN}) ya que la menor densidad del aire aumenta considerablemente la velocidad de pérdida real (\textit{Stall Speed}).
+
+% ----------------------------------------------------
+% OPERACIÓN DE VUELO (DESPEGUE)
+% ----------------------------------------------------
+\section{Operación de Vuelo}
+
+\subsection{Procedimiento de Despegue Manual (Hand-Launch)}
+Dado que la plataforma no cuenta con tren de aterrizaje, el despegue se realiza mediante un lanzamiento manual. Al poseer una configuración \textit{pusher} (con la hélice en la parte posterior), es \textbf{crítico} seguir este procedimiento para proteger la integridad del piloto y garantizar una salida aerodinámica limpia:
+
+\begin{enumerate}[itemsep=1ex]
+    \item \textbf{Configuración de Modo:} En la emisora, seleccione el modo de vuelo \textbf{FBWA} (Fly-By-Wire A). En este modo, el controlador de vuelo asistirá el despegue manteniendo las alas niveladas y un límite máximo de cabeceo.
+    \item \textbf{Posicionamiento:} Sujete el fuselaje firmemente por la parte inferior, justo por delante del Centro de Gravedad. El piloto debe orientarse dando la cara \textbf{directamente hacia la dirección del viento} (viento en cara) para maximizar la sustentación inicial.
+    \item \textbf{Aceleración Segura:} Acelere gradualmente (Throttle) hasta un 70\% - 80\% de potencia. Verifique acústicamente que el motor alcance RPM estables. \textit{Advertencia:} Mantenga su brazo extendido y el cuerpo completamente alejado del arco de giro de la hélice trasera.
+    \item \textbf{Lanzamiento:} Dé un paso firme hacia adelante y lance la aeronave con un movimiento rectilíneo, fuerte y fluido. La nariz debe apuntar ligeramente hacia arriba (aproximadamente $10^\circ$ a $15^\circ$ por encima del horizonte). \textbf{NUNCA} lance el avión con ángulo negativo (hacia el suelo) ni con un ángulo excesivo hacia arriba que induzca un \textit{stall} inmediato.
+    \item \textbf{Transición a Crucero:} Una vez que la aeronave gana velocidad y alcanza una altitud estable (aprox. 30 a 50 metros), reduzca la potencia a velocidad de crucero y continúe con la misión planificada.
 \end{enumerate}
 
-\section{Calibraciones Específicas de Ala Fija (ArduPlane)}
+% ----------------------------------------------------
+% PROCEDIMIENTOS DE EMERGENCIA (FAILSAFE)
+% ----------------------------------------------------
+\section{Procedimientos de Emergencia (Failsafe)}
+Dado el rango de operación de un ala fija, la pérdida temporal de la señal de radio es una posibilidad real. El sistema está configurado para activar automáticamente el modo \textbf{RTL (Return to Launch)} bajo las siguientes condiciones de Failsafe:
+\begin{itemize}[itemsep=1ex]
+    \item \textbf{Pérdida de Enlace RC:} Si el receptor FrSky deja de recibir señal del transmisor por más de 1.5 segundos.
+    \item \textbf{Batería Crítica:} Si el sensor Mauch detecta que el voltaje cae por debajo del umbral de seguridad preconfigurado.
+\end{itemize}
+\textbf{Comportamiento RTL en Ala Fija:} A diferencia de un cuadricóptero que se detiene y asciende en vertical, el ala fija iniciará un viraje suave, ascenderá a la altitud de retorno segura (ej. 100 metros) y volará hacia las coordenadas de despegue. Al llegar, \textbf{no aterrizará verticalmente}, sino que comenzará a orbitar (Loiter) en un círculo de radio predefinido hasta que el piloto recupere el control de la señal o la batería se agote.
 
-\subsection{Calibración del Tubo de Pitot (Airspeed)}
-En alas fijas, conocer la velocidad relativa al aire es crucial para evitar la pérdida (stall). El sensor conectado al Hub I2C debe calibrarse antes de cada vuelo. En Mission Planner, se debe ejecutar la \textit{Preflight Calibration} asegurándose de que la sonda de Pitot esté completamente cubierta para establecer la presión cero.
+% ----------------------------------------------------
+% MODOS DE VUELO Y CHECKLIST
+% ----------------------------------------------------
+\section{Modos de Vuelo Recomendados}
+Se debe evitar encarecidamente el modo MANUAL para pilotos en formación.
+\begin{itemize}[itemsep=1ex]
+    \item \textbf{FBWA (Fly-By-Wire A):} El modo principal de vuelo estabilizado. El piloto comanda ángulos máximos de inclinación (roll y pitch), pero el controlador estabiliza el avión. Si se sueltan los mandos, el avión regresa a vuelo nivelado automáticamente, previniendo maniobras que excedan la envolvente de vuelo.
+    \item \textbf{AUTOTUNE:} Una vez en vuelo estable en modo FBWA, se activa este modo y se realizan movimientos bruscos con los sticks. El Cube Orange calculará y guardará matemáticamente los valores óptimos de sintonización (PID) para responder al instante sin oscilaciones.
+    \item \textbf{AUTO:} Ejecución autónoma. El avión sigue una ruta de \textit{waypoints} pre-cargada desde el despegue hasta el aterrizaje.
+\end{itemize}
 
-\subsection{Compensación de Altitud en Ecosistemas Altoandinos}
-Operar en ubicaciones de elevada altitud topográfica (como Quito, a $\sim$2800 m.s.n.m.) impacta el rendimiento aerodinámico debido a la menor densidad del aire. 
-\begin{itemize}
-    \item \textbf{Velocidad de Pérdida (Stall Speed):} La velocidad respecto al suelo (\textit{True Airspeed}) será mayor.
-    \item \textbf{Ajuste de Parámetros:} Se deben revisar los parámetros \texttt{TRIM\_ARSPD\_CM} (velocidad de crucero) y \texttt{ARSPD\_FBW\_MIN} (velocidad mínima estabilizada) en Mission Planner para asegurar un margen seguro sobre la velocidad de pérdida real en estas condiciones.
+\newpage
+
+\section{Lista de Chequeo Pre-Vuelo (Checklist Operativo)}
+La aviación no tripulada exige rigurosidad. No intente el lanzamiento de la aeronave sin haber verificado secuencialmente todos los ítems de esta lista.
+
+\vspace{0.5cm}
+
+\renewcommand{\arraystretch}{1.6}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{tablehead} \textbf{Check} & \textbf{Acción Operativa} \\ \hline
+$\square$ & \textbf{Integridad mecánica:} Hélice asegurada al motor \textit{pusher}, alas ancladas al fuselaje, sin fisuras o daños estructurales visibles en la fibra de carbono. \\ \hline
+$\square$ & \textbf{Tubo de Pitot:} Tapa protectora roja retirada del tubo exterior. Mangueras de silicona conectadas sin dobleces. \\ \hline
+$\square$ & \textbf{Radio FrSky:} Encender el radio FrSky X8R \textbf{ANTES} de conectar la batería principal al avión. Comprobar nivel de batería del radio. \\ \hline
+$\square$ & \textbf{Batería y CG:} Voltaje de la LiPo por encima del 95\%. Fijada firmemente en la posición exacta que balancea el Centro de Gravedad. \\ \hline
+$\square$ & \textbf{Telemetría:} Enlace RFD900 confirmado en Mission Planner. GPS con "3D Fix" (luz verde parpadeante en módulo Here) y HDOP menor a 1.2. \\ \hline
+$\square$ & \textbf{Calibración Pitot:} Botón \textit{Preflight Calibration} pulsado en la pestaña "Actions" de Mission Planner (Asegurar lectura \textit{Airspeed} en 0 m/s $\pm$ 1 m/s). \\ \hline
+$\square$ & \textbf{Control de Superficies:} Verificar visualmente dirección correcta de alerones, elevador y timón moviendo los sticks de la emisora. \\ \hline
+$\square$ & \textbf{Despegue:} Conmutador de la emisora posicionado en FBWA (lanzamiento manual asistido) o TAKEOFF (lanzamiento autónomo). \\ \hline
+\end{tabularx}
+
+% ----------------------------------------------------
+% TROUBLESHOOTING Y MANTENIMIENTO
+% ----------------------------------------------------
+\section{Resolución de Problemas (Troubleshooting)}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|>{\columncolor{epnblue!5}\bfseries}p{4cm}|>{\raggedright\arraybackslash}X|}
+\hline
+Lectura de velocidad (Airspeed) errática o en negativo & Las mangueras del tubo de Pitot están conectadas al revés en el sensor, o hay obstrucción por polvo/humedad en el tubo exterior de metal. \\ \hline
+El avión oscila agresivamente de arriba hacia abajo (Pitch) & La ganancia Proporcional (P) del elevador es excesivamente alta. Reducir el valor \texttt{PTCH2SRV\_P} en la tabla de parámetros extendidos de Mission Planner. \\ \hline
+Mensaje "Mag Anomaly" o error de brújula al acelerar el motor & Interferencia electromagnética estática. Alejar el módulo GPS/Compass de los cables de poder principales de la batería o del ESC Hobbywing. \\ \hline
+Rechazo de Armado (Pre-Arm: Hardware Safety Switch) & El interruptor de seguridad físico del Cube Orange no ha sido presionado. Mantener presionado hasta que el LED deje de parpadear y se vuelva sólido. \\ \hline
+\end{tabularx}
+
+\section{Mantenimiento y Almacenamiento Post-Vuelo}
+Para garantizar la longevidad de la plataforma y la seguridad del laboratorio:
+\begin{itemize}[itemsep=1ex]
+    \item \textbf{Gestión de Baterías LiPo:} Nunca almacene las baterías completamente cargadas. Utilice la función \textit{Storage} de su cargador para dejarlas a un voltaje de seguridad de 3.8V por celda si no volará en más de 48 horas.
+    \item \textbf{Estructura:} Limpie la fibra de carbono con alcohol isopropílico. Revise meticulosamente que las bisagras del empenaje no presenten fatiga por flexión ni grietas.
+    \item \textbf{Electrónica:} Desconecte siempre el tubo de Pitot de las mangueras de silicona si el avión va a ser desensamblado y transportado en vehículo, evitando que los cambios de presión bruscos en el transporte dañen la fina membrana del sensor piezoeléctrico.
 \end{itemize}
 
 \end{document}
